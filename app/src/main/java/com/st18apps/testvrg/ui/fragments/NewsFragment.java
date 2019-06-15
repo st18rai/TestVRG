@@ -81,10 +81,16 @@ public class NewsFragment extends BaseFragment {
         });
     }
 
-    private void loadNews(){
-        newsViewModel.loadMostEmailed();
-        newsViewModel.loadMostViewed();
-        newsViewModel.loadMostShared();
+    private void loadNews() {
+        if (!newsViewModel.getMostEmailed().hasObservers()) {
+            newsViewModel.loadMostEmailed();
+        }
+        if (!newsViewModel.getMostViewed().hasObservers()) {
+            newsViewModel.loadMostViewed();
+        }
+        if (!newsViewModel.getMostShared().hasObservers()) {
+            newsViewModel.loadMostShared();
+        }
     }
 
 }

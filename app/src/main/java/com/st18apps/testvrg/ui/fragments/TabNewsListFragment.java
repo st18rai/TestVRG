@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.st18apps.testvrg.R;
 import com.st18apps.testvrg.adapters.NewsRecyclerAdapter;
 import com.st18apps.testvrg.interfaces.Constants;
 import com.st18apps.testvrg.ui.BaseFragment;
+import com.st18apps.testvrg.utils.FragmentUtil;
 import com.st18apps.testvrg.viewmodels.NewsViewModel;
 
 import butterknife.BindView;
@@ -83,6 +85,14 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
 
     @Override
     public void onItemClick(int position) {
+        newsViewModel.select(newsRecyclerAdapter.getData().get(position));
+        FragmentUtil.replaceFragment(getActivity().getSupportFragmentManager(),
+                new DetailNewsFragment(), true);
+    }
 
+    @Override
+    public void onLikeClick(int position) {
+        newsRecyclerAdapter.updateLike(position);
+        newsViewModel.insert(newsRecyclerAdapter.getData().get(position));
     }
 }

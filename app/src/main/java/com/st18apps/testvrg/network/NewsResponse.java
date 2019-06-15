@@ -1,7 +1,7 @@
 package com.st18apps.testvrg.network;
 
 import com.google.gson.annotations.SerializedName;
-import com.st18apps.testvrg.model.Result;
+import com.st18apps.testvrg.model.NewsData;
 
 import java.util.List;
 
@@ -10,7 +10,8 @@ public class NewsResponse {
     private String copyright;
     @SerializedName("num_results")
     private int numResults;
-    private List<Result> results = null;
+    @SerializedName("results")
+    private List<NewsData> newsDataList = null;
 
     public String getStatus() {
         return status;
@@ -24,8 +25,8 @@ public class NewsResponse {
         return numResults;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public List<NewsData> getResults() {
+        return newsDataList;
     }
 
     public boolean isStatusOK(){
