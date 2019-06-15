@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TestVRG</string>
+    <string name="title_news">News</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="most_emailed">Most emailed</string>
+    <string name="most_viewed">Most viewed</string>
+    <string name="most_shared">Most shared</string>
+</resources>
