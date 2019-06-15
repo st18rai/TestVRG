@@ -37,8 +37,6 @@ public class NewsFragment extends BaseFragment {
 
         newsViewModel = ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
 
-        loadNews();
-
         return view;
     }
 
@@ -79,18 +77,6 @@ public class NewsFragment extends BaseFragment {
 
             }
         });
-    }
-
-    private void loadNews() {
-        if (!newsViewModel.getMostEmailed().hasObservers()) {
-            newsViewModel.loadMostEmailed();
-        }
-        if (!newsViewModel.getMostViewed().hasObservers()) {
-            newsViewModel.loadMostViewed();
-        }
-        if (!newsViewModel.getMostShared().hasObservers()) {
-            newsViewModel.loadMostShared();
-        }
     }
 
 }

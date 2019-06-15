@@ -17,6 +17,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository newsRepository;
     private final LiveData<List<NewsData>> favoritesNews;
+    private final MutableLiveData<String> status = new MutableLiveData<>();
 
     private final MutableLiveData<List<NewsData>> mostEmailed = new MutableLiveData<>();
     private final MutableLiveData<List<NewsData>> mostViewed = new MutableLiveData<>();
@@ -28,6 +29,14 @@ public class NewsViewModel extends AndroidViewModel {
 
         newsRepository = new NewsRepository(application);
         favoritesNews = newsRepository.getAllFavoriteNews();
+    }
+
+    private void setStatus(String statusNew) {
+        status.setValue(statusNew);
+    }
+
+    public LiveData<String> getStatus() {
+        return status;
     }
 
     public void select(NewsData item) {
@@ -70,9 +79,14 @@ public class NewsViewModel extends AndroidViewModel {
                 newsResponse -> {
                     if (newsResponse.isStatusOK()) {
                         setMostEmailed(newsResponse.getResults());
+                    } else {
+                        setStatus(newsResponse.getStatus());
                     }
 
-                }, Throwable::printStackTrace);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    setStatus("Something went wrong");
+                });
     }
 
     public void loadMostViewed() {
@@ -81,9 +95,14 @@ public class NewsViewModel extends AndroidViewModel {
                 newsResponse -> {
                     if (newsResponse.isStatusOK()) {
                         setMostViewed(newsResponse.getResults());
+                    } else {
+                        setStatus(newsResponse.getStatus());
                     }
 
-                }, Throwable::printStackTrace);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    setStatus("Something went wrong");
+                });
     }
 
     public void loadMostShared() {
@@ -92,26 +111,31 @@ public class NewsViewModel extends AndroidViewModel {
                 newsResponse -> {
                     if (newsResponse.isStatusOK()) {
                         setMostShared(newsResponse.getResults());
+                    } else {
+                        setStatus(newsResponse.getStatus());
                     }
 
-                }, Throwable::printStackTrace);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    setStatus("Something went wrong");
+                });
     }
 
     // db methods
 
-    public void insert(NewsData newsData){
+    public void insert(NewsData newsData) {
         newsRepository.insert(newsData);
     }
 
-    public void update(NewsData newsData){
+    public void update(NewsData newsData) {
         newsRepository.update(newsData);
     }
 
-    public void delete(NewsData newsData){
+    public void delete(NewsData newsData) {
         newsRepository.delete(newsData);
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         newsRepository.deleteAll();
     }
 

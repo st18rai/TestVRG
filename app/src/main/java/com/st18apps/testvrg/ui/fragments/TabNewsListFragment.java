@@ -14,9 +14,13 @@ import android.widget.Toast;
 import com.st18apps.testvrg.R;
 import com.st18apps.testvrg.adapters.NewsRecyclerAdapter;
 import com.st18apps.testvrg.interfaces.Constants;
+import com.st18apps.testvrg.model.NewsData;
 import com.st18apps.testvrg.ui.BaseFragment;
 import com.st18apps.testvrg.utils.FragmentUtil;
 import com.st18apps.testvrg.viewmodels.NewsViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +33,7 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
     private NewsViewModel newsViewModel;
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private String newsType;
+    private List<NewsData> favoritesNews;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle
@@ -43,6 +48,10 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
             newsType = getArguments().getString(Constants.NEWS_TYPE, Constants.MOST_EMAILED);
         }
 
+        favoritesNews = new ArrayList<>();
+
+        loadNews();
+
         setRecycler();
 
         return view;
@@ -53,6 +62,13 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
         super.onViewCreated(view, savedInstanceState);
 
         setDataToUI();
+
+        newsViewModel.getFavoritesNews().observe(this, newsData ->
+                favoritesNews = newsData);
+
+        // show toast if errors
+        newsViewModel.getStatus().observe(this, message ->
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
 
     }
 
@@ -65,22 +81,53 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
         recyclerNews.setAdapter(newsRecyclerAdapter);
     }
 
-    private void setDataToUI() {
+    private void loadNews() {
+
         switch (newsType) {
             case Constants.MOST_EMAILED:
-                newsViewModel.getMostEmailed().observe(this, results ->
-                        newsRecyclerAdapter.setData(results));
+                newsViewModel.loadMostEmailed();
                 break;
 
             case Constants.MOST_VIEWED:
-                newsViewModel.getMostViewed().observe(this, results ->
-                        newsRecyclerAdapter.setData(results));
+                newsViewModel.loadMostViewed();
                 break;
+
             case Constants.MOST_SHARED:
-                newsViewModel.getMostShared().observe(this, results ->
-                        newsRecyclerAdapter.setData(results));
+                newsViewModel.loadMostShared();
                 break;
         }
+    }
+
+    private void setDataToUI() {
+        switch (newsType) {
+            case Constants.MOST_EMAILED:
+                newsViewModel.getMostEmailed().observe(this, newsData ->
+                        newsRecyclerAdapter.setData(checkFavorites(newsData)));
+                break;
+
+            case Constants.MOST_VIEWED:
+                newsViewModel.getMostViewed().observe(this, newsData ->
+                        newsRecyclerAdapter.setData(checkFavorites(newsData)));
+                break;
+
+            case Constants.MOST_SHARED:
+                newsViewModel.getMostShared().observe(this, newsData ->
+                        newsRecyclerAdapter.setData(checkFavorites(newsData)));
+                break;
+        }
+    }
+
+    private List<NewsData> checkFavorites(List<NewsData> newsDataList) {
+
+        for (int i = 0; i < newsDataList.size(); i++) {
+            for (int j = 0; j < favoritesNews.size(); j++) {
+                if (newsDataList.get(i).getId() == favoritesNews.get(j).getId()) {
+                    newsDataList.get(i).setLiked(true);
+                }
+            }
+        }
+
+        return newsDataList;
     }
 
     @Override
@@ -92,7 +139,13 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
 
     @Override
     public void onLikeClick(int position) {
+
+        if (newsRecyclerAdapter.getData().get(position).isLiked()) {
+            newsViewModel.delete(newsRecyclerAdapter.getData().get(position));
+        } else {
+            newsViewModel.insert(newsRecyclerAdapter.getData().get(position));
+        }
         newsRecyclerAdapter.updateLike(position);
-        newsViewModel.insert(newsRecyclerAdapter.getData().get(position));
+
     }
 }
