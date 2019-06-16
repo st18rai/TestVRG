@@ -43,9 +43,9 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void init() {
-        NewsViewPagerAdapter placePagerAdapter = new NewsViewPagerAdapter(
+        NewsViewPagerAdapter pagerAdapter = new NewsViewPagerAdapter(
                 (getChildFragmentManager()), tabLayout.getTabCount());
-        newsPager.setAdapter(placePagerAdapter);
+        newsPager.setAdapter(pagerAdapter);
         newsPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {

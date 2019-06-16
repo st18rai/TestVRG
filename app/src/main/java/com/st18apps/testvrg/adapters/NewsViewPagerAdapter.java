@@ -10,7 +10,7 @@ import com.st18apps.testvrg.ui.fragments.TabNewsListFragment;
 
 public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    int mNumOfTabs;
+    private int mNumOfTabs;
 
     public NewsViewPagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
