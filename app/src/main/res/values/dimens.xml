@@ -13,8 +13,10 @@
 
     <!-- image sizes-->
     <dimen name="news_photo_size">120dp</dimen>
+    <dimen name="fav_icon_size">40dp</dimen>
 
     <!-- text sizes-->
     <dimen name="title_text_size">18sp</dimen>
+    <dimen name="no_fav_text_size">24sp</dimen>
 
 </resources>

@@ -34,7 +34,6 @@ public class NewsViewModel extends AndroidViewModel {
     private void setStatus(String statusNew) {
         status.setValue(statusNew);
     }
-
     public LiveData<String> getStatus() {
         return status;
     }
@@ -42,7 +41,6 @@ public class NewsViewModel extends AndroidViewModel {
     public void select(NewsData item) {
         selected.setValue(item);
     }
-
     public LiveData<NewsData> getSelected() {
         return selected;
     }
@@ -50,7 +48,6 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<NewsData>> getMostEmailed() {
         return mostEmailed;
     }
-
     private void setMostEmailed(List<NewsData> items) {
         mostEmailed.setValue(items);
     }
@@ -58,7 +55,6 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<NewsData>> getMostViewed() {
         return mostViewed;
     }
-
     private void setMostViewed(List<NewsData> items) {
         mostViewed.setValue(items);
     }
@@ -66,7 +62,6 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<NewsData>> getMostShared() {
         return mostShared;
     }
-
     private void setMostShared(List<NewsData> items) {
         mostShared.setValue(items);
     }

@@ -1,6 +1,5 @@
 package com.st18apps.testvrg.ui.fragments;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import com.st18apps.testvrg.R;
 import com.st18apps.testvrg.adapters.NewsViewPagerAdapter;
 import com.st18apps.testvrg.ui.BaseFragment;
-import com.st18apps.testvrg.viewmodels.NewsViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +24,6 @@ public class NewsFragment extends BaseFragment {
     @BindView(R.id.news_pager)
     ViewPager newsPager;
 
-    private NewsViewModel newsViewModel;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle
             savedInstanceState) {
@@ -35,16 +31,7 @@ public class NewsFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        newsViewModel = ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
-
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // set title and toolbar state
     }
 
     @Override

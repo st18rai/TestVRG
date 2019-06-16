@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.st18apps.testvrg.R;
 import com.st18apps.testvrg.adapters.NewsRecyclerAdapter;
@@ -24,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAdapter.ItemClickListener {
 
@@ -38,7 +38,7 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle
             savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab_news_list, container, false);
+        View view = inflateWithLoadingIndicator(R.layout.fragment_tab_news_list, container);
 
         ButterKnife.bind(this, view);
 
@@ -67,8 +67,8 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
                 favoritesNews = newsData);
 
         // show toast if errors
-        newsViewModel.getStatus().observe(this, message ->
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
+//        newsViewModel.getStatus().observe(this, message ->
+//                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
 
     }
 
@@ -82,6 +82,8 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
     }
 
     private void loadNews() {
+
+        setLoading(true);
 
         switch (newsType) {
             case Constants.MOST_EMAILED:
@@ -101,18 +103,24 @@ public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAda
     private void setDataToUI() {
         switch (newsType) {
             case Constants.MOST_EMAILED:
-                newsViewModel.getMostEmailed().observe(this, newsData ->
-                        newsRecyclerAdapter.setData(checkFavorites(newsData)));
+                newsViewModel.getMostEmailed().observe(this, newsData -> {
+                    setLoading(false);
+                    newsRecyclerAdapter.setData(checkFavorites(newsData));
+                });
                 break;
 
             case Constants.MOST_VIEWED:
-                newsViewModel.getMostViewed().observe(this, newsData ->
-                        newsRecyclerAdapter.setData(checkFavorites(newsData)));
+                newsViewModel.getMostViewed().observe(this, newsData -> {
+                    setLoading(false);
+                    newsRecyclerAdapter.setData(checkFavorites(newsData));
+                });
                 break;
 
             case Constants.MOST_SHARED:
-                newsViewModel.getMostShared().observe(this, newsData ->
-                        newsRecyclerAdapter.setData(checkFavorites(newsData)));
+                newsViewModel.getMostShared().observe(this, newsData -> {
+                    setLoading(false);
+                    newsRecyclerAdapter.setData(checkFavorites(newsData));
+                });
                 break;
         }
     }

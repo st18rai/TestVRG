@@ -11,6 +11,7 @@ import android.webkit.WebView;
 
 import com.st18apps.testvrg.R;
 import com.st18apps.testvrg.ui.BaseFragment;
+import com.st18apps.testvrg.ui.MainActivity;
 import com.st18apps.testvrg.viewmodels.NewsViewModel;
 
 import butterknife.BindView;
@@ -40,7 +41,16 @@ public class DetailNewsFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
 
-        // set title and toolbar state
+        ((MainActivity) getActivity()).setBackButtonEnabled(true);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        ((MainActivity) getActivity()).setBackButtonEnabled(false);
+
     }
 
     @Override
