@@ -23,7 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class TabNewsListFragment extends BaseFragment implements NewsRecyclerAdapter.ItemClickListener {
 

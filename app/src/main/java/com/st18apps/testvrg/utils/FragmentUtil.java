@@ -101,7 +101,7 @@ public class FragmentUtil {
     public static void addFragment(FragmentManager manager, Fragment fragment) {
         FragmentTransaction fTrans;
         fTrans = manager.beginTransaction();
-            fTrans.addToBackStack(null);
+        fTrans.addToBackStack(null);
         fTrans.add(R.id.container, fragment, fragment.getClass().getSimpleName());
         fTrans.commit();
     }

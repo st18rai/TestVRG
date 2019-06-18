@@ -33,7 +33,6 @@ public class DetailNewsFragment extends BaseFragment {
 
         newsViewModel = ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
 
-
         return view;
     }
 
@@ -57,8 +56,8 @@ public class DetailNewsFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        newsViewModel.getSelected().observe(this, result ->
-                loadNewsDetail(result.getUrl()));
+        newsViewModel.getSelected().observe(this, newsData ->
+                loadNewsDetail(newsData.getUrl()));
 
     }
 

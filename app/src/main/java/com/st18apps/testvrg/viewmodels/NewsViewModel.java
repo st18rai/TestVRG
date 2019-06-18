@@ -16,6 +16,7 @@ import java.util.List;
 public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository newsRepository;
+
     private final LiveData<List<NewsData>> favoritesNews;
     private final MutableLiveData<String> status = new MutableLiveData<>();
 

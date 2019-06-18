@@ -32,7 +32,7 @@ public class NewsData {
 
     public String getImageUrl() {
 
-        if (media != null){
+        if (media != null) {
             imageUrl = media.get(0).getMediaMetadata().get(2).getUrl();
         }
 

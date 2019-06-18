@@ -37,7 +37,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         notifyDataSetChanged();
     }
 
-    public void updateLike(int position){
+    public void updateLike(int position) {
         if (data.get(position).isLiked()) {
             data.get(position).setLiked(false);
         } else {
@@ -47,7 +47,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         notifyItemChanged(position);
     }
 
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         data.remove(position);
         notifyItemRemoved(position);
     }
@@ -73,18 +73,18 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull final NewsHolder holder, int position) {
 
-        NewsData result = data.get(position);
+        NewsData newsData = data.get(position);
 
-        Drawable likeImage = result.isLiked() ? ContextCompat.getDrawable(holder.getContext(),
+        Drawable likeImage = newsData.isLiked() ? ContextCompat.getDrawable(holder.getContext(),
                 R.drawable.ic_favorite_full_24dp) : ContextCompat.getDrawable(holder.getContext(),
                 R.drawable.ic_favorite_border_24dp);
 
-        holder.title.setText(result.getTitle());
-        holder.date.setText(result.getPublishedDate());
+        holder.title.setText(newsData.getTitle());
+        holder.date.setText(newsData.getPublishedDate());
         holder.like.setImageDrawable(likeImage);
 
         Glide.with(holder.getContext())
-                .load(result.getImageUrl())
+                .load(newsData.getImageUrl())
                 .into(holder.photo);
 
     }
@@ -96,7 +96,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
     public interface ItemClickListener {
         void onItemClick(int position);
-
         void onLikeClick(int position);
     }
 

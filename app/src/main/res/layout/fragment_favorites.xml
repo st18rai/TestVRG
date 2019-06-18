@@ -7,17 +7,17 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_favorites"
-        android:layoutAnimation="@anim/layout_animation_fall_down"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
         android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/empty_box"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_margin="@dimen/middle_margin"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
